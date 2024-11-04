@@ -1,0 +1,72 @@
+import lunaParkPackage.Giostre;
+import lunaParkPackage.Persona;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import static utility.Tools.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner tastiera = new Scanner(System.in);
+        boolean uscita = false;
+        final int MAXPERSONE = 3;
+        ArrayList<Persona> lunaPark = new ArrayList<>(MAXPERSONE);
+        int cont = 0;
+        do {
+            String[] opzioni = {"---LUNA PARK---", "1. Ingresso", "2. Uscita", "3. Visualizza giostre", "4. Visualizza giorno e ora dell'accesso", "5. Visualizza tempo di permanenza", "6. Fine"};
+            int scelta = Menu(opzioni, tastiera);
+
+            switch (scelta) {
+                case 1 -> {
+                    System.out.println("Ingresso");
+                    if (cont < MAXPERSONE) {
+                        Persona persona = new Persona();
+                        System.out.print("Inserisci il nome: ");
+                        String nome = tastiera.nextLine();
+                        persona.nome = nome;
+                        persona.accesso = LocalDate.now();
+                        lunaPark.add(persona);
+
+                        System.out.println("Benvenuto nel luna park!");
+                        System.out.println(persona.toString());
+                        cont++;
+                    } else {
+                        System.out.println("Il luna park è pieno");
+                    }
+                }
+
+                case 2 -> {
+                    System.out.println("Uscita");
+                    System.out.print("Inserisci il numero del biglietto per uscire: ");
+                    int biglietto = Integer.parseInt(tastiera.nextLine());
+
+                    boolean personaTrovata = false;
+                    for (int i = 0; i < cont; i++) {
+                        if (lunaPark.get(i).biglietto == biglietto) {
+                            lunaPark.remove(i);
+                            cont--;
+                            personaTrovata = true;
+                            break;
+                        }
+                    }
+                    if (!personaTrovata) {
+                        System.out.println("Nessuna persona trovata con il biglietto: " + biglietto);
+                    }
+                }
+
+
+                case 6 -> {
+                    System.out.println("Fine");
+                    uscita = true;
+                }
+
+                default -> System.out.println("Inserisci una scelta valida");
+            }
+
+
+        } while (!uscita);
+
+    }
+}
