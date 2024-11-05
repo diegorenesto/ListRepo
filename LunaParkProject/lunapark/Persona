@@ -10,7 +10,7 @@ public class Persona {
     public int biglietto = genera.nextInt(0,100);
     public String nome;
     public LocalDate accesso;
-    public List<Giostre> giostreProvate = new ArrayList<>();
+    public ArrayList<Giostre> giostreProvate = new ArrayList<>();
 
     public void aggiungiGiostra(Giostre giostra) {
         giostreProvate.add(giostra);
