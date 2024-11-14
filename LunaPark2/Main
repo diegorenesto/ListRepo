@@ -1,18 +1,17 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
 
 import static utility.Tools.*;
 
-public class Main {
+public class MainLuna {
     public static void main(String[] args) {
         boolean esci = false;
         int nBiglietto = 0;
         int nPersone = 0;
         Scanner tastiera = new Scanner(System.in);
         final int MAXPERSONE = 10;
-        ArrayList<Persona> lista = new ArrayList<>();
+        ArrayList<Biglietto> lista = new ArrayList<>();
         String[] opzioni = {"GESTORE LUNAPARK", "Registra entrata", "Registra uscita", "Nuova giostra", "Esci"};
         do {
 
@@ -22,18 +21,18 @@ public class Main {
                         if (nPersone > MAXPERSONE)
                             throw new Exception();
                         nPersone++;
-                        Persona p = metodoCreazioneBiglietto(++nBiglietto);
-                        lista.add(p);
+                        Biglietto b = metodoCreazioneBiglietto(++nBiglietto);
+                        lista.add(b);
                         System.out.println("Numero assegnato al cliente: " + nBiglietto);
                     } catch (Exception e) {
-                        System.out.println("...");
+                        System.out.println("Luna park pieno");
                     }
 
                 }
                 case 2 -> {  // nuova giostra
                     System.out.println("Numero biglietto cliente: ");
                     int numeroB = Integer.parseInt(tastiera.nextLine());
-                    Persona p = metodoNuovaGiostra(numeroB, tastiera);
+                    Biglietto p = metodoNuovaGiostra(numeroB, tastiera);
                     lista.add(p);
 
                 }
@@ -46,16 +45,16 @@ public class Main {
         } while (!esci);
     }
 
-    public static Persona metodoCreazioneBiglietto(int nBiglietto) {
-        Persona cliente = new Persona();
+    public static Biglietto metodoCreazioneBiglietto(int nBiglietto) {
+        Biglietto cliente = new Biglietto();
         cliente.numeroBiglietto = nBiglietto;
         cliente.momentoEvento = LocalDateTime.now();  // momento dell ingresso
         return cliente;
     }
 
 
-    public static Persona metodoNuovaGiostra(int nBiglietto, Scanner tastiera) {
-        Persona cliente = new Persona();
+    public static Biglietto metodoNuovaGiostra(int nBiglietto, Scanner tastiera) {
+        Biglietto cliente = new Biglietto();
         boolean esci;
         do {
             try {
@@ -75,8 +74,8 @@ public class Main {
     }
 
 
-    public static boolean findIndex(ArrayList<Persona> gestore, int nBiglietto) {
-        for (Persona persona : gestore) {
+    public static boolean findIndex(ArrayList<Biglietto> gestore, int nBiglietto) {
+        for (Biglietto persona : gestore) {
             if (persona.numeroBiglietto == nBiglietto) {
                 return true;
             }
